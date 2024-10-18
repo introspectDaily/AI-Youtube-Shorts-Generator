@@ -37,7 +37,7 @@ def crop_to_vertical(input_video_path, output_video_path):
     out = cv2.VideoWriter(output_video_path, fourcc, fps, (vertical_width, vertical_height))
     global Fps
     Fps = fps
-    print(fps)
+    # print(fps)
     count = 0
     for _ in range(total_frames):
         ret, frame = cap.read()
@@ -71,8 +71,8 @@ def crop_to_vertical(input_video_path, output_video_path):
 
             # print(faces[0])
             centerX = x+(w//2)
-            print(centerX)
-            print(x_start - (centerX - half_width))
+            # print(centerX)
+            # print(x_start - (centerX - half_width))
             if count == 0 or (x_start - (centerX - half_width)) <1 :
                 ## IF dif from prev fram is low then no movement is done
                 pass #use prev vals
@@ -90,8 +90,8 @@ def crop_to_vertical(input_video_path, output_video_path):
                         x_start -= int(cropped_frame.shape[1]) - (x_end-x_start)
                         if x_start < 0:
                             x_end += int(cropped_frame.shape[1]) - (x_end-x_start)
-                    print("Frame size inconsistant")
-                    print(x_end- x_start)
+                    # print("Frame size inconsistant")
+                    # print(x_end- x_start)
 
         count += 1
         cropped_frame = frame[:, x_start:x_end]
@@ -100,7 +100,7 @@ def crop_to_vertical(input_video_path, output_video_path):
             x_end = x_start + vertical_width
             cropped_frame = frame[:, x_start:x_end]
         
-        print(cropped_frame.shape)
+        # print(cropped_frame.shape)
 
         out.write(cropped_frame)
 

@@ -1,12 +1,15 @@
 from faster_whisper import WhisperModel
 import torch
 
+def auto_detach_device():
+    # else 'mps' if torch.backends.mps.is_available() 
+    return 'cuda' if torch.cuda.is_available() else 'cpu'
 def transcribeAudio(audio_path):
     try:
         print("Transcribing audio...")
-        Device = "cuda" if torch.cuda.is_available() else "cpu"
+        Device = auto_detach_device()
         print(Device)
-        model = WhisperModel("base.en", device="cuda" if torch.cuda.is_available() else "cpu")
+        model = WhisperModel("base.en", device = Device)
         print("Model loaded")
         segments, info = model.transcribe(audio=audio_path, beam_size=5, language="en", max_new_tokens=128, condition_on_previous_text=False)
         segments = list(segments)

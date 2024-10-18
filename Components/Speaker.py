@@ -106,8 +106,11 @@ def detect_faces_and_speakers(input_video_path, output_video_path):
                     cv2.putText(frame, "Active Speaker", (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
                 if lip_distance >= MaxDif:
                     break
-
-        Frames.append([x, y, x1, y1])
+        
+        try:
+            Frames.append([x, y, x1, y1])
+        except UnboundLocalError as e:
+            continue
 
         out.write(frame)
         cv2.imshow('Frame', frame)

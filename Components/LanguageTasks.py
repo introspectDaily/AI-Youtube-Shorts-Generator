@@ -1,11 +1,17 @@
 from openai import OpenAI
+from openai import AzureOpenAI
 from dotenv import load_dotenv
 import os
 load_dotenv()
 
-client = OpenAI(
-    api_key=os.getenv('OPENAI_API'), # Replace with your OpenAI API key
+azure_client = AzureOpenAI(
+    api_key=os.getenv('AZURE_API'), # Replace with your Azure OpenAI API key
+    azure_endpoint=os.getenv('AZURE_ENDPOINT'), # Replace with your Azure OpenAI endpoint
+    api_version = "2024-09-01-preview"
 )
+# client = OpenAI(
+#     api_key=os.getenv('OPENAI_API'), # Replace with your OpenAI API key
+# )
 
 
 import json
@@ -24,6 +30,7 @@ def extract_times(json_string):
         end_time_int = int(end_time)
         return start_time_int, end_time_int
       except Exception as e:
+        print(e)
         return 0,0
 
 
@@ -51,10 +58,10 @@ Any Example
 
 
 
-def GetHighlight(Transcription):
+def GetHighlight(Transcription, repeat_cnt=1, max_repeat_cnt=3):
   print("Getting Highlight from Transcription ") 
-  response = client.chat.completions.create(
-    model="gpt-4o-2024-05-13",
+  response = azure_client.chat.completions.create(
+    model="gpt-4o",
     temperature=0.7,
     messages=[
       {"role": "system", "content": system},
@@ -68,9 +75,9 @@ def GetHighlight(Transcription):
   # print(json_string)
   Start , End = extract_times(json_string)
   if Start == End:
-    Ask = input("Error - Get Highlights again (y/n) -> ").lower()
-    if Ask == 'y':
-      Start , End = GetHighlight(Transcription)
+      if repeat_cnt == max_repeat_cnt:
+         return Start, End
+      Start , End = GetHighlight(Transcription, repeat_cnt+1, max_repeat_cnt)
   return Start, End
 
 
