@@ -49,7 +49,6 @@ def crop_to_vertical(input_video_path, output_video_path):
         if len(faces) >-1:
             if len(faces) == 0:
                 (x, y, w, h) = Frames[count]
-
             # (x, y, w, h) = faces[0]  
             try:
                 #check if face 1 is active

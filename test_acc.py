@@ -26,9 +26,11 @@ def process_video(url, sessionid=None):
 
                 final_video_path = legal_path("Final.mp4", sessionid)
                 combine_videos(output_video_path, croped_video_path, final_video_path)
+                return final_video_path
             else:
                 print("Error in getting highlight")
         else:
             print("No transcriptions found")
     else:
         print("No audio file found")
+    return ""

@@ -2,6 +2,7 @@ import gradio as gr
 import time
 import tempfile
 import os
+import multiprocessing
 
 
 css = """
@@ -18,14 +19,13 @@ css = """
   border: 1px solid #999999;
 }
 """
+from test_acc import process_video as bk_process_video
 
 
 def process_video(video,request: gr.Request):
     # This is a placeholder function
     # In a real scenario, you would implement your video processing logic here
-    processed_video = video
-    print(video)
-    print("session_hash", request.session_hash)
+    processed_video = bk_process_video(video, request.session_hash)
     
     print("Process finished.")
     btn = gr.DownloadButton(label="Download Video", value=processed_video, visible=True, elem_id=None, elem_classes=None)
@@ -58,7 +58,7 @@ with gr.Blocks(css=css) as demo:
         outputs=[input_video,output_video, download_btn],
     )
 
-   
-demo.launch(server_port=9990, allowed_paths=["./file"])
+if __name__ == '__main__':
+    demo.launch(server_port=9990, allowed_paths=["./file"])
 
 

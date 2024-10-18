@@ -99,7 +99,7 @@ def detect_faces_and_speakers(input_video_path, output_video_path):
 
                 # Assuming lips are approximately at the bottom third of the face
                 lip_distance = abs((y + 2 * face_height // 3) - (y1))
-                print(lip_distance)
+                # print(lip_distance)
 
                 # Combine visual and audio cues
                 if lip_distance >= MaxDif and is_speaking_audio:  # Adjust the threshold as needed
@@ -113,7 +113,7 @@ def detect_faces_and_speakers(input_video_path, output_video_path):
             continue
 
         out.write(frame)
-        cv2.imshow('Frame', frame)
+        # cv2.imshow('Frame', frame)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
