@@ -19,7 +19,8 @@ css = """
   border: 1px solid #999999;
 }
 """
-from test_acc import process_video as bk_process_video
+
+from test_acc import process_video_without_vertical as bk_process_video
 
 
 def process_video(video,request: gr.Request):
@@ -37,7 +38,7 @@ def clear_click():
 
 with gr.Blocks(css=css) as demo:
     with gr.Row():
-        with gr.Column(scale=1):
+        with gr.Column(scale=1): 
             input_video = gr.Video(label="Upload Video")
             with gr.Row():
                 clear_btn = gr.Button("Clear")

@@ -6,5 +6,5 @@
 *.webm
 **/__pycache__/
 .env
-sessions
+/sessions
 models/
