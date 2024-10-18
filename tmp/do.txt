@@ -1,0 +1,2 @@
+d076a40 4b52b1a
+git filter-branch --index-filter 'git rm --cached --ignore-unmatch .env' d076a40..4b52b1a
