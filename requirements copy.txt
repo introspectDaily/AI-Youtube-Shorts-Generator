@@ -12,4 +12,3 @@ webrtcvad-wheels
 pydub
 openai==1.44.1
 gradio
---extra-index-url https://download.pytorch.org/whl/cu121

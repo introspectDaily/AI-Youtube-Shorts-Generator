@@ -1,7 +1,7 @@
 from moviepy.video.io.VideoFileClip import VideoFileClip
 from moviepy.editor import VideoFileClip
 import subprocess
-
+import ffmpeg
 import os
 current_path = os.getcwd()
 
@@ -48,10 +48,24 @@ def extractAudio(video_path, sessionid=None):
         return None
 
 
+def get_video_codec(file_path):
+    try:
+        probe = ffmpeg.probe(file_path)
+        video_streams = probe['streams']
+        for stream in video_streams:
+            if stream['codec_type'] == 'video':
+                return stream['codec_name']  # 返回编码格式
+    except ffmpeg.Error as e:
+        print(f"An error occurred: {e}")
+        return "acc"
+
 def crop_video(input_file, output_file, start_time, end_time):
+    # 获取input_file的编码格式  
+    input_codec = get_video_codec(input_file)
+
     with VideoFileClip(input_file) as video:
         cropped_video = video.subclip(start_time, end_time)
-        cropped_video.write_videofile(output_file, codec='libx264')
+        cropped_video.write_videofile(output_file, codec= input_codec )
 
 # Example usage:
 if __name__ == "__main__":

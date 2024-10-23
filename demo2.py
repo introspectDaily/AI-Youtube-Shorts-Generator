@@ -59,7 +59,15 @@ with gr.Blocks(css=css) as demo:
         outputs=[input_video,output_video, download_btn],
     )
 
+
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--listen", type=str, default="127.0.0.1")
+parser.add_argument("--port", type=int, default="7861")
+args, unknown = parser.parse_known_args()
+
 if __name__ == '__main__':
-    demo.launch(server_port=9990, allowed_paths=["./file"])
+    demo.launch(server_name=args.listen, server_port=args.port, allowed_paths=["./file"])
 
 

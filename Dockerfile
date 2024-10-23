@@ -1,5 +1,13 @@
-FROM pytorch/pytorch:2.4.1-cuda12.4-cudnn9-runtime
+FROM pytorch/pytorch:2.4.1-cuda12.4-cudnn9-runtime-aptupdated
 
-RUN sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list && apt update && apt install -y  \
-    && pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple \
-    && pip install -r requirements.txt
+COPY ./  /workspace/
+
+RUN apt install -y ffmpeg \
+    && pip install -r requirements.txt \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* && pip cache purge 
+
+EXPOSE 7861
+
+WORKDIR /workspace
+
+ENTRYPOINT [ "python", "demo2.py", "--listen", "0.0.0.0"]

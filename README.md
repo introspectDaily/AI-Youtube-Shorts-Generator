@@ -77,3 +77,11 @@ This is a v0.1 release and might have some bugs. Please report any issues on the
 [AI B-roll generator](https://github.com/Anil-matcha/AI-B-roll)
 
 [No-code AI Youtube Shorts Generator](https://www.vadoo.tv/clip-youtube-video)
+
+
+## Docker
+```bash
+# Run command
+docker build -t aisg:demo .
+docker run -it -d -p 7861:7861 --mount=type=bind,source=`pwd`/.env,target=/workspace/.env --name aisg aisg:demo --port 7861
+```
